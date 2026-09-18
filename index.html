@@ -1,73 +1,49 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-```
-<title>Warriors Cats</title>
-```
-
+    <title>Warriors Cats</title>
 </head>
 <body>
 
-```
-<h1>Warriors Cats</h1>
+    <h1>Warriors Cats</h1>
+    <p id="status">Connecting to Supabase...</p>
+    <p id="message">Loading test message...</p>
 
-<p id="status">Connecting to Supabase...</p>
+    <!-- Load Supabase JavaScript library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<p id="message">Loading test message...</p>
+    <script>
+        const SUPABASE_URL = "https://dgjqmzhowoadtwqdxaxs.supabase.co";
+        const SUPABASE_KEY = "sb_publishable_TLE0xqIY_6ng61uwKvpS3Q_YWfM5Mir";
 
-<!-- Load Supabase JavaScript library -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+        const { createClient } = supabase;
+        const db = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-<script>
-    // Your Supabase project details
-    const SUPABASE_URL =
-        "https://dgjqmzhowoadtwqdxaxs.supabase.co";
+        async function loadTestMessage() {
+            const { data, error } = await db
+                .from("test")
+                .select("message")
+                .limit(1);
 
-    const SUPABASE_KEY =
-        "sb_publishable_TLE0xqIY_6ng61uwKvpS3Q_YWfM5Mir";
+            if (error) {
+                console.error(error);
+                document.getElementById("status").textContent = "Error connecting to Supabase :(";
+                document.getElementById("message").textContent = error.message;
+                return;
+            }
 
-    // Create Supabase client
-    const { createClient } = supabase;
-
-    const db = createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-    );
-
-    // Read the test row from Supabase
-    async function loadTestMessage() {
-        const { data, error } = await db
-            .from("test")
-            .select("message")
-            .limit(1);
-
-        if (error) {
-            console.error(error);
-
-            document.getElementById("status").textContent =
-                "Error connecting to Supabase :(";
-
-            document.getElementById("message").textContent =
-                error.message;
-
-            return;
+            document.getElementById("status").textContent = "Supabase connection works! :D";
+            
+            if (data && data.length > 0) {
+                document.getElementById("message").textContent = data[0].message;
+            } else {
+                document.getElementById("message").textContent = "No messages found in 'test' table.";
+            }
         }
 
-        document.getElementById("status").textContent =
-            "Supabase connection works! :D";
-
-        document.getElementById("message").textContent =
-            data[0].message;
-    }
-
-    // Run the function
-    loadTestMessage();
-</script>
-```
-
+        loadTestMessage();
+    </script>
 </body>
 </html>

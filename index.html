@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Warriors Cats</title>
+</head>
+<body>
+
+    <h1>Warriors Cats</h1>
+
+    <p id="status">Connecting to Supabase...</p>
+
+    <!-- Load Supabase JavaScript library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script>
+        // Your Supabase project details
+        const SUPABASE_URL =
+            "https://dgjqmzhowoadtwqdxaxs.supabase.co";
+
+        const SUPABASE_KEY =
+            "YOUR_PUBLISHABLE_KEY_HERE";
+
+        // Create Supabase client
+        const { createClient } = supabase;
+
+        const db = createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY
+        );
+
+        // Display connection status
+        document.getElementById("status").textContent =
+            "Supabase connection is ready! :D";
+    </script>
+
+</body>
+</html>

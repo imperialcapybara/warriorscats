@@ -4,23 +4,167 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Warriors Cats</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --text-color: #f0f0f0;
+            --card-bg: #1e1e1e;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .status-box {
+            background-color: #2a2a2a;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 4px solid #4caf50;
+        }
+
+        /* Hide elements dynamically */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Grid layout for the 6 Clan cards */
+        .clan-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .clan-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border: 2px solid transparent;
+        }
+
+        .clan-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+        }
+
+        /* Clan Specific Colors */
+        .tc { border-color: #e67e22; } /* ThunderClan - Amber */
+        .wc { border-color: #f1c40f; } /* WindClan - Yellow */
+        .sc { border-color: #27ae60; } /* ShadowClan - Dark Green */
+        .rc { border-color: #2980b9; } /* RiverClan - Blue */
+        .skc { border-color: #e74c3c; } /* SkyClan - Red */
+        .stc { border-color: #9b59b6; } /* StarClan - Purple */
+
+        /* Detailed Clan Page View */
+        .clan-view {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .back-btn {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .back-btn:hover {
+            background-color: #555;
+        }
+    </style>
 </head>
 <body>
 
-    <h1>Warriors Cats</h1>
-    <p id="status">Connecting to Supabase...</p>
-    <p id="message">Loading test message...</p>
+    <div class="container">
+        <h1>Warriors Cats Hub</h1>
+
+        <!-- Supabase Connection Status Section -->
+        <div class="status-box">
+            <p id="status">Connecting to Supabase...</p>
+            <p id="message">Loading test message...</p>
+        </div>
+
+        <!-- MAIN VIEW: 6 Clan Cards -->
+        <div id="home-view">
+            <h2>Select a Clan</h2>
+            <div class="clan-grid">
+                <div class="clan-card tc" onclick="openClan('ThunderClan', 'Fierce and brave. They inhabit the deciduous forest.')">
+                    <h3>ThunderClan</h3>
+                    <p>Click to view cats & details</p>
+                </div>
+                <div class="clan-card wc" onclick="openClan('WindClan', 'Swift and loyal. They inhabit the open moors.')">
+                    <h3>WindClan</h3>
+                    <p>Click to view cats & details</p>
+                </div>
+                <div class="clan-card sc" onclick="openClan('ShadowClan', 'Wily and proud. They inhabit the dark pine forest.')">
+                    <h3>ShadowClan</h3>
+                    <p>Click to view cats & details</p>
+                </div>
+                <div class="clan-card rc" onclick="openClan('RiverClan', 'Clever and strong. They inhabit the riverbanks.')">
+                    <h3>RiverClan</h3>
+                    <p>Click to view cats & details</p>
+                </div>
+                <div class="clan-card skc" onclick="openClan('SkyClan', 'Agile and daring. Masters of climbing and jumping.')">
+                    <h3>SkyClan</h3>
+                    <p>Click to view cats & details</p>
+                </div>
+                <div class="clan-card stc" onclick="openClan('StarClan', 'The spiritual ancestors watching from the silverpool.')">
+                    <h3>StarClan</h3>
+                    <p>Click to view cats & details</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- DETAIL VIEW: Dynamically populated Clan Page -->
+        <div id="clan-view" class="clan-view hidden">
+            <button class="back-btn" onclick="showHome()">← Back to Clans</button>
+            <h2 id="clan-title">Clan Name</h2>
+            <p id="clan-desc">Clan description will go here...</p>
+
+            <hr style="border-color: #333; margin: 20px 0;">
+
+            <h3>Clan Cats (from Supabase)</h3>
+            <div id="clan-cats-list">
+                <p><i>Future feature: Query Supabase cats filtered by this clan!</i></p>
+            </div>
+        </div>
+
+    </div>
 
     <!-- Load Supabase JavaScript library -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script>
+        // Supabase Initialization
         const SUPABASE_URL = "https://dgjqmzhowoadtwqdxaxs.supabase.co";
         const SUPABASE_KEY = "sb_publishable_TLE0xqIY_6ng61uwKvpS3Q_YWfM5Mir";
 
         const { createClient } = supabase;
         const db = createClient(SUPABASE_URL, SUPABASE_KEY);
 
+        // Fetch Connection Message
         async function loadTestMessage() {
             const { data, error } = await db
                 .from("test")
@@ -44,6 +188,25 @@
         }
 
         loadTestMessage();
+
+        // Single-Page View Switching Logic
+        function openClan(clanName, description) {
+            // Hide main list, show clan view
+            document.getElementById("home-view").classList.add("hidden");
+            document.getElementById("clan-view").classList.remove("hidden");
+
+            // Update text inside clan page dynamically
+            document.getElementById("clan-title").textContent = clanName;
+            document.getElementById("clan-desc").textContent = description;
+
+            // Optional: Here you can fetch cats from Supabase WHERE clan = clanName!
+        }
+
+        function showHome() {
+            // Show main list, hide clan view
+            document.getElementById("clan-view").classList.add("hidden");
+            document.getElementById("home-view").classList.remove("hidden");
+        }
     </script>
 </body>
 </html>

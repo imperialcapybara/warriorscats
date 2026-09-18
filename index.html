@@ -167,7 +167,7 @@
 
         <!-- Supabase Status -->
         <div class="status-box">
-            <p id="status">Connecting to Supabase...</p>
+            <p id="status">Connecting to the database...</p>
             <p id="message">Loading test message...</p>
         </div>
 
@@ -175,27 +175,27 @@
         <div class="clan-grid">
             <div class="clan-card tc" onclick="navigateToClan('thunderclan')">
                 <h2>ThunderClan</h2>
-                <p>Fierce and brave. Masters of hunting in the dense forest.</p>
+                <p>ThunderClan's cats are fierce and brave, and they hunt in the dense undergrowth of the forest.</p>
             </div>
             <div class="clan-card wc" onclick="navigateToClan('windclan')">
                 <h2>WindClan</h2>
-                <p>Swift and loyal. Inhabit the wide open moors.</p>
+                <p>WindClan's cats are swift and loyal, and they inhabit the wide open moors.</p>
             </div>
             <div class="clan-card sc" onclick="navigateToClan('shadowclan')">
                 <h2>ShadowClan</h2>
-                <p>Proud and stealthy. Masters of the dark pine woods.</p>
+                <p>ShadowClan's cats are proud and stealthy, and they are masters of the dark pine woods.</p>
             </div>
             <div class="clan-card rc" onclick="navigateToClan('riverclan')">
                 <h2>RiverClan</h2>
-                <p>Clever and strong. Expert swimmers and fishers.</p>
+                <p>RiverClan's cats are clever and strong, and they are expert swimmers and fishers.</p>
             </div>
             <div class="clan-card skc" onclick="navigateToClan('skyclan')">
                 <h2>SkyClan</h2>
-                <p>Agile and daring. Famous for leaping and tree-climbing.</p>
+                <p>SkyClan's cats are agile and daring, and they are famous for leaping and tree-climbing.</p>
             </div>
             <div class="clan-card stc" onclick="navigateToClan('starclan')">
                 <h2>StarClan</h2>
-                <p>The noble ancestors who walk in the stars above.</p>
+                <p>The noble ancestors of the Clans, who walk in the stars above.</p>
             </div>
         </div>
     </div>
@@ -262,11 +262,11 @@
         async function loadTestMessage() {
             const { data, error } = await db.from("test").select("message").limit(1);
             if (error) {
-                document.getElementById("status").textContent = "Error connecting to Supabase :(";
+                document.getElementById("status").textContent = "Error connecting to the database :(";
                 document.getElementById("message").textContent = error.message;
                 return;
             }
-            document.getElementById("status").textContent = "Supabase connection works! :D";
+            document.getElementById("status").textContent = "Database connection works! :D";
             document.getElementById("message").textContent = data[0]?.message || "No message found.";
         }
         loadTestMessage();

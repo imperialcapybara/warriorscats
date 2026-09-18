@@ -71,20 +71,32 @@
             border-radius: 12px;
             margin-bottom: 30px;
             position: relative;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .clan-header h1 {
+            margin-top: 0;
+            font-size: 2.5rem;
+        }
+
+        .clan-header p {
+            font-size: 1.1rem;
+            margin-bottom: 0;
         }
 
         .back-btn {
-            background: rgba(0,0,0,0.4);
+            background: rgba(0,0,0,0.5);
             color: #fff;
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
             padding: 10px 18px;
             border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
             margin-bottom: 20px;
+            transition: background 0.2s;
         }
 
-        .back-btn:hover { background: rgba(0,0,0,0.6); }
+        .back-btn:hover { background: rgba(0,0,0,0.7); }
 
         .cat-grid {
             display: grid;
@@ -99,20 +111,39 @@
             border-radius: 8px;
         }
 
-        /* Clan Theming */
-        .tc { border-color: #e67e22; } 
-        .wc { border-color: #f1c40f; } 
-        .sc { border-color: #27ae60; } 
-        .rc { border-color: #2980b9; } 
-        .skc { border-color: #e74c3c; } 
-        .stc { border-color: #9b59b6; } 
+        /* Clan Card Border Colors */
+        .tc { border-color: #ff9800; } 
+        .wc { border-color: #fbc02d; } 
+        .sc { border-color: #4caf50; } 
+        .rc { border-color: #2196f3; } 
+        .skc { border-color: #ff5252; } 
+        .stc { border-color: #ab47bc; } 
 
-        .tc-bg { background: linear-gradient(135deg, #d35400, #e67e22); }
-        .wc-bg { background: linear-gradient(135deg, #f39c12, #f1c40f); color: #121212; }
-        .sc-bg { background: linear-gradient(135deg, #1e8449, #27ae60); }
-        .rc-bg { background: linear-gradient(135deg, #1f618d, #2980b9); }
-        .skc-bg { background: linear-gradient(135deg, #c0392b, #e74c3c); }
-        .stc-bg { background: linear-gradient(135deg, #8e44ad, #9b59b6); }
+        /* Lighter Clan Header Gradients */
+        .tc-bg { 
+            background: linear-gradient(135deg, #ff9800, #ffb74d); 
+            color: #1a0c00; 
+        }
+        .wc-bg { 
+            background: linear-gradient(135deg, #fbc02d, #fff176); 
+            color: #1a1600; 
+        }
+        .sc-bg { 
+            background: linear-gradient(135deg, #4caf50, #81c784); 
+            color: #051a06; 
+        }
+        .rc-bg { 
+            background: linear-gradient(135deg, #2196f3, #64b5f6); 
+            color: #02101e; 
+        }
+        .skc-bg { 
+            background: linear-gradient(135deg, #ff5252, #ff8a80); 
+            color: #1f0303; 
+        }
+        .stc-bg { 
+            background: linear-gradient(135deg, #ab47bc, #ce93d8); 
+            color: #16031a; 
+        }
     </style>
 </head>
 <body>
@@ -230,7 +261,7 @@
         }
         loadTestMessage();
 
-        // 2. Page Routing Logic (Changes entire page)
+        // 2. Page Routing Logic
         function navigateToClan(clanKey) {
             const clan = clansData[clanKey];
             if (!clan) return;

@@ -157,7 +157,7 @@
 
         <!-- Supabase Status -->
         <div class="status-box">
-            <p id="status">Connecting to Supabase...</p>
+            <p id="status">Connecting to the database...</p>
             <p id="message">Loading test message...</p>
         </div>
 
@@ -252,11 +252,11 @@
         async function loadTestMessage() {
             const { data, error } = await db.from("test").select("message").limit(1);
             if (error) {
-                document.getElementById("status").textContent = "Error connecting to Supabase :(";
+                document.getElementById("status").textContent = "Error connecting to the database :(";
                 document.getElementById("message").textContent = error.message;
                 return;
             }
-            document.getElementById("status").textContent = "Supabase connection works! :D";
+            document.getElementById("status").textContent = "Database connection works! :D";
             document.getElementById("message").textContent = data[0]?.message || "No message found.";
         }
         loadTestMessage();
